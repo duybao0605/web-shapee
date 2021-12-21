@@ -9,8 +9,11 @@ use App\Http\Controllers\frontend\Login_SignupController;
 
 //admin
 use App\Http\Controllers\Auth\LoginController;
-
 use App\Http\Controllers\admin\DashBoardController;
+use App\Http\Controllers\frontend\UserController;
+use App\Http\Controllers\admin\AdminController;
+
+
 
 
 /*
@@ -25,18 +28,29 @@ use App\Http\Controllers\admin\DashBoardController;
 */
 
 //front end
-
-Route::get('login', [Login_SignupController::class, 'indexLogin']);
-Route::post('login', [Login_SignupController::class, 'login'])->name('user.login');
-Route::get('signup', [Login_SignupController::class, 'indexSignup']);
-Route::post('signup', [Login_SignupController::class, 'createUser'])->name('user.create');
-
-Route::get('logout', [Login_SignupController::class, 'logout']);
-
+//index
 Route::get('/', [IndexController::class, 'index']);
-Route::post('contact', [ContactController::class, 'sendContact'])->name('contact.send');
-Route::post('rate', [RatingController::class, 'sendRate'])->name('rate.send');
 
+Route::group([
+	'middleware' => ['customer'],
+], function () {
+    //signup
+    Route::get('login', [Login_SignupController::class, 'indexLogin'])->middleware('customerNotLogin');
+    Route::post('login', [Login_SignupController::class, 'login'])->name('user.login');
+    //login
+    Route::get('signup', [Login_SignupController::class, 'indexSignup'])->middleware('customerNotLogin');
+    Route::post('signup', [Login_SignupController::class, 'createUser'])->name('user.create');
+    //logout
+    Route::get('logout', [Login_SignupController::class, 'logout']);
+
+    //contact
+    Route::post('contact', [ContactController::class, 'sendContact'])->name('contact.send');
+    //rate
+    Route::post('rate', [RatingController::class, 'sendRate'])->name('rate.send');
+    //Profile
+    Route::get('/profile/{id}', [UserController::class, 'index']);
+    Route::post('/profile/{id}',[UserController::class, 'edit']);
+});
 
 
 //admin 
@@ -56,5 +70,10 @@ Route::group([
 
 ], function (){
 	//admin
+    //dash board
 	Route::get('/dashboard', [DashBoardController::class, 'index']);
+    //user Profile
+    Route::get('/profile/{id}', [AdminController::class, 'index']);
+	Route::post('/profile/{id}',[AdminController::class, 'edit']);
+
 });

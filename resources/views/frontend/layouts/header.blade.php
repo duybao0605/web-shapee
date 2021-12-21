@@ -17,9 +17,20 @@
             <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
             <li><a class="nav-link scrollto" href="#team">Team</a></li>
             <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-            
+
+
+            <?php
+                use App\Models\User;
+                use Illuminate\Support\Facades\Auth;
+                $userId = Auth::id();
+                $user = User::findOrFail($userId);
+
+            ?>
             @if(Auth::check())
+            
+
                 <li><a class="nav-link scrollto bi bi-box-arrow-right" href="/logout">Logout<i class="bi bi-box-arrow-right"></i></a></li>
+                <li><a class="nav-link scrollto bi bi-box-arrow-right" href="{{ url('profile/'.Auth::user()->id) }}"><img src="{{ URL::to('/upload/user/avatar/'.Auth::user()->avatar) }}" alt="user" class="rounded-circle" width="30" height="30"> {{Auth::user()->name}}</a></li>
                 
             @else
                 <li><a class="nav-link scrollto" href="/login">Login</a></li>

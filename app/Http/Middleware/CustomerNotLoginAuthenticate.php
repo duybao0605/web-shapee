@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CustomerNotAuthenticate
+class CustomerNotLoginAuthenticate
 {
     /**
      * Handle an incoming request.
@@ -20,7 +20,7 @@ class CustomerNotAuthenticate
         if( !Auth::check() ){
             return $next($request);
         }else{
-            return redirect()->back()->withErrors('Thao tác không đúng quy trình! Xin thử lại!');
+            return redirect('login');
         }
     }
 }

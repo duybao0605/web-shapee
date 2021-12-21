@@ -608,7 +608,7 @@ h6 {
 
 .login-form h2,
 .signup-form h2 {
-    color: #696763;
+    color: black;
     font-family: 'Roboto', sans-serif;
     font-size: 20px;
     font-weight: 300;
@@ -619,9 +619,9 @@ h6 {
 .signup-form form input,
 .signup-form form select,
 .signup-form form textarea {
-    background: #F0F0E9;
+    background: #f5f5f1;
     border: medium none;
-    color: #696763;
+    color: black;
     display: block;
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
